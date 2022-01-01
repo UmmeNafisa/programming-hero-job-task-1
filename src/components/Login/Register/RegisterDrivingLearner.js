@@ -10,6 +10,16 @@ const RegisterDrivingLearner = () => {
     const [loginData, setLoginData] = useState({});
     const history = useNavigate()
     const { user, registerUser, isLoading, authError } = useAuth();
+    const [success, setSuccess] = useState(false)
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [age, setAge] = useState('');
+    const [contact, setContact] = useState('');
+    const [address, setAddress] = useState('');
+    const [vehicleType, setVehicleType] = useState('');
+    const [profileImage, setProfileImage] = useState(null);
+    const [nidImage, setNidImage] = useState(null);
+
 
     const handleOnBlur = e => {
         const field = e.target.name;
@@ -24,6 +34,34 @@ const RegisterDrivingLearner = () => {
             return
         }
         registerUser(loginData.email, loginData.password, loginData.name, history);
+        if (!profileImage) {
+            return;
+        }
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('contact', contact);
+        formData.append('address', address);
+        formData.append('age', age);
+        formData.append('vehicleType', vehicleType);
+        formData.append('profileImage', profileImage);
+        formData.append('nidImage', nidImage);
+
+
+        fetch('http://localhost:5000/riders', {
+            method: "POST",
+            body: formData
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.insertedId) {
+                    alert('Registration done successfully')
+                    setSuccess(true)
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         e.preventDefault();
     }
     return (
@@ -38,7 +76,8 @@ const RegisterDrivingLearner = () => {
                                 placeholder="Your Full Name"
                                 required
                                 name="name"
-                                onBlur={handleOnBlur} />
+                                onBlur={handleOnBlur}
+                                onChange={e => setName(e.target.value)} />
                             {errors.name?.type === 'required' && "Your name is required"}
                             <br />
 
@@ -48,7 +87,8 @@ const RegisterDrivingLearner = () => {
                                 required
                                 name="email"
                                 type="email"
-                                onBlur={handleOnBlur} />
+                                onBlur={handleOnBlur}
+                                onChange={e => setEmail(e.target.value)} />
                             {errors.email?.type === 'required' && "Your email is required"}
                             <br />
                             <input {...register("contact", { required: true })}
@@ -57,7 +97,7 @@ const RegisterDrivingLearner = () => {
                                 required
                                 name="contact"
                                 type="number"
-                                onBlur={handleOnBlur} />
+                                onChange={e => setContact(e.target.value)} />
                             {errors.number?.type === 'required' && "Your contact number is required"}
                             <br />
                             <input {...register("age", { required: true, min: 18, max: 99 })}
@@ -66,7 +106,7 @@ const RegisterDrivingLearner = () => {
                                 required
                                 name="age"
                                 type="number"
-                                onBlur={handleOnBlur} />
+                                onChange={e => setAge(e.target.value)} />
                             {errors.age?.type === 'required' && "Your age is required"}
                             <br />
                             <input {...register("address", { required: true })}
@@ -75,7 +115,7 @@ const RegisterDrivingLearner = () => {
                                 required
                                 name="address"
                                 type="text"
-                                onBlur={handleOnBlur} />
+                                onChange={e => setAddress(e.target.value)} />
                             {errors.address?.type === 'required' && "Your address is required"}
                             <br />
                             <input {...register("password", { required: true })}
@@ -96,29 +136,29 @@ const RegisterDrivingLearner = () => {
                                 onBlur={handleOnBlur} />
                             {errors.rePassword && "Re-enter Password is required"}
                             <br />
-                            <select {...register("vehicleType")} className="m-2 w-50">
+                            <select {...register("vehicleType")} className="m-2 w-50" onChange={e => setVehicleType(e.target.value)}>
                                 <option value="">Vehicle Type</option>
-                                <option value="A">Car</option>
-                                <option value="B">Bike</option>
+                                <option value="Car">Car</option>
+                                <option value="Bike">Bike</option>
                             </select>
                             <br />
 
                             <label htmlFor="">NID Card Image</label>
                             <input type="file" accept="image/*" {...register("nidImg", { required: true })} className="m-2 w-50"
                                 name="NIDimage"
-                                onBlur={handleOnBlur} />
+                                onChange={e => setNidImage(e.target.files[0])} />
                             <br />
 
                             <label htmlFor="">Your Image</label>
                             <input type="file" accept="image/*" {...register("profileImage", { required: true })} className="m-2 w-50"
                                 name="profileImage"
-                                onBlur={handleOnBlur} />
+                                onChange={e => setProfileImage(e.target.files[0])} />
                             <br />
 
                             <Button type="submit" className="btn-all border-0 " >Register Now</Button>
 
                             {isLoading && <Spinner animation="grow" variant="primary" />}
-                            {user?.email && <Alert variant='success'>Welcome, Your registration is successfully done!</Alert>}
+                            {success && <Alert variant='success'>Welcome, Your registration is successfully done!</Alert>}
                             {authError && <Alert variant='danger'>{authError}</Alert>}
 
                             <br /> <br />
