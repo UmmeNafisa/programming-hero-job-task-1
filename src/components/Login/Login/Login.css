@@ -1,0 +1,13 @@
+.login-bg{
+    background-image: url("https://image.freepik.com/free-photo/colorful-composition-kid-puzzle_23-2147689860.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+   background-position: center;
+   height: auto;
+   max-height: 100vh ;
+}
+
+.header-bg{
+    color: white;
+    background-image: linear-gradient(rgba(241, 229, 60, 0.905),rgb(72, 168, 197));
+}
