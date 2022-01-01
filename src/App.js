@@ -10,6 +10,7 @@ import AuthProvider from './contexts/AuthProvider/AuthProvider';
 import Home from './components/Home/Home';
 import RegisterRider from './components/Login/Register/RegisterRider';
 import RegisterDrivingLearner from './components/Login/Register/RegisterDrivingLearner';
+import RiderPage from './components/RidersPage/RiderPage';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="register-rider/*" element={<RegisterRider />} />
             <Route path="register-learner/*" element={<RegisterDrivingLearner />} />
+            <Route path="rider-profile/*" element={<RiderPage />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>

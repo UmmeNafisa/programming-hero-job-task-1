@@ -26,20 +26,17 @@ const RegisterRider = () => {
     const handleOnBlur = e => {
         const field = e.target.name;
         const value = e.target.value;
-        // console.log(e.target.file[0])
         const newLoginData = { ...loginData };
         newLoginData[field] = value;
         setLoginData(newLoginData);
     }
-
-
-
 
     const handleLoginSubmit = e => {
         if (loginData.password !== loginData.password2) {
             alert('Your password did not match');
             return
         }
+        registerUser(loginData.email, loginData.password, loginData.email, history);
         if (!profileImage) {
             return;
         }
@@ -86,6 +83,7 @@ const RegisterRider = () => {
                                 placeholder="Your Full Name"
                                 required
                                 name="name"
+                                onBlur={handleOnBlur}
                                 onChange={e => setName(e.target.value)} />
                             {errors.name?.type === 'required' && "Your name is required"}
                             <br />
@@ -96,6 +94,7 @@ const RegisterRider = () => {
                                 required
                                 name="email"
                                 type="email"
+                                onBlur={handleOnBlur}
                                 onChange={e => setEmail(e.target.value)} />
                             {errors.email?.type === 'required' && "Your email is required"}
                             <br />

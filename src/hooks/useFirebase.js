@@ -39,7 +39,7 @@ const useFirebase = () => {
 
                 //back to the home page after registration
 
-                history.replace('/');
+                history.replace('/rider-profile');
             })
             .catch((error) => {
                 setAuthError(error.message);
