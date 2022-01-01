@@ -33,7 +33,7 @@ const RegisterDrivingLearner = () => {
             alert('Your password did not match');
             return
         }
-        registerUser(loginData.email, loginData.password, loginData.name, history);
+        RegisterDrivingLearner(loginData.email, loginData.password, loginData.name, history);
         if (!profileImage) {
             return;
         }
@@ -48,7 +48,7 @@ const RegisterDrivingLearner = () => {
         formData.append('nidImage', nidImage);
 
 
-        fetch('http://localhost:5000/riders', {
+        fetch('https://protected-reef-11218.herokuapp.com/drivingLearner', {
             method: "POST",
             body: formData
         })

@@ -5,7 +5,7 @@ const RiderPage = () => {
     const [riders, setRiders] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/riders')
+        fetch('https://protected-reef-11218.herokuapp.com/riders')
             .then(res => res.json())
             .then(data => setRiders(data))
     }, [])

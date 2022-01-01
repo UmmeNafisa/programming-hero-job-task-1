@@ -14,7 +14,7 @@ const useFirebase = () => {
     const [token, setToken] = useState('');
 
     const auth = getAuth();
-    const googleProvider = new GoogleAuthProvider();
+
 
     //for registrations
     const registerUser = (email, password, name, history) => {
@@ -31,15 +31,37 @@ const useFirebase = () => {
                     .then(() => {
                     })
                     .catch((error) => {
-                    });
-
-                //save user to the database
-
-                saveUser(email, name, 'POST')
+                    })
 
                 //back to the home page after registration
 
                 history.replace('/rider-profile');
+            })
+            .catch((error) => {
+                setAuthError(error.message);
+                console.log(error);
+            })
+            .finally(() => setIsLoading(false));
+    }
+    const RegisterDrivingLearner = (email, password, name, history) => {
+        setIsLoading(true);
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                setAuthError('');
+                const newUser = { email, displayName: name };
+                setUser(newUser);
+                // send name to firebase after creation
+                updateProfile(auth.currentUser, {
+                    displayName: name
+                })
+                    .then(() => {
+                    })
+                    .catch((error) => {
+                    })
+
+                //back to the home page after registration
+
+                history.replace('/driving-learner');
             })
             .catch((error) => {
                 setAuthError(error.message);
@@ -99,20 +121,6 @@ const useFirebase = () => {
             .finally(() => setIsLoading(false));
     }
 
-    //save the user info if he registered successfully
-
-    const saveUser = (email, displayName, method) => {
-        const user = { email, displayName };
-        fetch('http://localhost:5000/riders', {
-            method: method,
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(user)
-        })
-            .then()
-    }
-
     return {
         user,
         admin,
@@ -122,6 +130,7 @@ const useFirebase = () => {
         registerUser,
         loginUser,
         logout,
+        RegisterDrivingLearner
     }
 }
 

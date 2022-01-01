@@ -54,7 +54,7 @@ const RegisterRider = () => {
         formData.append('nidImage', nidImage);
         formData.append('licenseImage', licenseImage);
 
-        fetch('http://localhost:5000/riders', {
+        fetch('https://protected-reef-11218.herokuapp.com/riders', {
             method: "POST",
             body: formData
         })

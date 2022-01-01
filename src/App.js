@@ -11,6 +11,7 @@ import Home from './components/Home/Home';
 import RegisterRider from './components/Login/Register/RegisterRider';
 import RegisterDrivingLearner from './components/Login/Register/RegisterDrivingLearner';
 import RiderPage from './components/RidersPage/RiderPage';
+import LearnerPage from './components/LearnerPage/LearnerPage';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
             <Route path="register-rider/*" element={<RegisterRider />} />
             <Route path="register-learner/*" element={<RegisterDrivingLearner />} />
             <Route path="rider-profile/*" element={<RiderPage />} />
+            <Route path="driving-learner/*" element={<LearnerPage />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
