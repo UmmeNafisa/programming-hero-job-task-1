@@ -64,25 +64,6 @@ const useFirebase = () => {
             .finally(() => setIsLoading(false));
     }
 
-    //google sign in 
-    const signInWithGoogle = (location, history) => {
-        setIsLoading(true);
-        signInWithPopup(auth, googleProvider)
-            .then((result) => {
-                const user = result.user;
-
-                //user info updated to data base 
-
-                saveUser(user.email, user.displayName, 'PUT')
-
-                const destination = location?.state?.from || '/';
-                history.replace(destination);
-                setAuthError('');
-            }).catch((error) => {
-                setAuthError(error.message);
-            }).finally(() => setIsLoading(false));
-    }
-
     // observer user state AuthStateChange
     useEffect(() => {
         const unsubscribed = onAuthStateChanged(auth, (user) => {
@@ -100,12 +81,12 @@ const useFirebase = () => {
 
     // check the email  admin or not  
 
-    useEffect(() => {
-        fetch(`https://fierce-hollows-12616.herokuapp.com/users/${user.email}`)
-            .then(res => res.json())
-            .then(data => setAdmin(data.admin))
+    // useEffect(() => {
+    //     fetch(`https://fierce-hollows-12616.herokuapp.com/users/${user.email}`)
+    //         .then(res => res.json())
+    //         .then(data => setAdmin(data.admin))
 
-    }, [user.email])
+    // }, [user.email])
 
 
     const logout = () => {
@@ -122,7 +103,7 @@ const useFirebase = () => {
 
     const saveUser = (email, displayName, method) => {
         const user = { email, displayName };
-        fetch('https://fierce-hollows-12616.herokuapp.com/users', {
+        fetch('http://localhost:5000/riders', {
             method: method,
             headers: {
                 'content-type': 'application/json'
@@ -140,7 +121,6 @@ const useFirebase = () => {
         authError,
         registerUser,
         loginUser,
-        signInWithGoogle,
         logout,
     }
 }

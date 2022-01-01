@@ -6,8 +6,10 @@ import {
   Route,
 } from "react-router-dom";
 import AuthProvider from './contexts/AuthProvider/AuthProvider';
-import Register from './components/Login/Register/Register';
+
 import Home from './components/Home/Home';
+import RegisterRider from './components/Login/Register/RegisterRider';
+import RegisterDrivingLearner from './components/Login/Register/RegisterDrivingLearner';
 
 
 function App() {
@@ -17,7 +19,8 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="register/*" element={<Register />} />
+            <Route path="register-rider/*" element={<RegisterRider />} />
+            <Route path="register-learner/*" element={<RegisterDrivingLearner />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
