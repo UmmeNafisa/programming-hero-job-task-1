@@ -1,0 +1,12 @@
+[
+    {
+        "id": 1,
+        "package": "Car Driving Lessons",
+        "cost": 200
+    },
+    {
+        "id": 2,
+        "package": "Bike Driving Lessons",
+        "cost": 100
+    }
+]
