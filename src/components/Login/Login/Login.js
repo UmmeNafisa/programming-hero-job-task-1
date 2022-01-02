@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 import { Alert, Button, Spinner } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
-import { useHistory, useLocation } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
-import ShopFooter from '../../Shared/ShopFooter/ShopFooter';
-import ShopNavbar from '../../Shared/ShopNavbar/ShopNavbar';
 import './Login.css'
 
 const Login = () => {
     const { register, formState: { errors } } = useForm();
     const [loginData, setLoginData] = useState({});
-    const { user, loginUser, signInWithGoogle, isLoading, authError } = useAuth();
+    const { user, loginUser, isLoading, authError } = useAuth();
 
     const location = useLocation();
-    const history = useHistory();
+    const history = useNavigate();
 
     const handleOnChange = e => {
         const field = e.target.name;
@@ -27,12 +25,9 @@ const Login = () => {
         loginUser(loginData.email, loginData.password, location, history);
         e.preventDefault();
     }
-    const handleGoogleSignIn = () => {
-        signInWithGoogle(location, history)
-    }
+
     return (
         <>
-            <ShopNavbar></ShopNavbar>
             <div className="login-bg">
                 <div className="w-75 mx-auto py-5">
                     <div className="container">
@@ -59,16 +54,12 @@ const Login = () => {
                             <Button className="btn-all border-0 mt-3" type="submit" >Login</Button>
 
                             {isLoading && <Spinner animation="grow" variant="primary" />}
-                            {user?.email && <Alert variant='success'>Login successfully!</Alert>}
+                            {/* {user?.email && <Alert variant='success'>Login successfully!</Alert>} */}
                             {authError && <Alert variant='danger'>{authError}</Alert>}
                         </form>
-                        <p> New User ? Create a new Account <Link to="/register">Register</Link> </p>
-                        <p>------------ or ------------</p>
-                        <Button className="btn-all border-0 mb-5" onClick={handleGoogleSignIn} >Google Sign In</Button>
                     </div>
                 </div>
             </div>
-            <ShopFooter></ShopFooter>
         </>
     );
 };

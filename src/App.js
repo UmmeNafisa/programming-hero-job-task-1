@@ -13,6 +13,7 @@ import RegisterDrivingLearner from './components/Login/Register/RegisterDrivingL
 import RiderPage from './components/RidersPage/RiderPage';
 import LearnerPage from './components/LearnerPage/LearnerPage';
 import Payment from './components/Payment/Payment';
+import Login from './components/Login/Login/Login'
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="register-rider/*" element={<RegisterRider />} />
             <Route path="register-learner/*" element={<RegisterDrivingLearner />} />
+            <Route path="login/*" element={<Login />} />
             <Route path="rider-profile/*" element={<RiderPage />} />
             <Route path="driving-learner/*" element={<LearnerPage />} />
             <Route path="payment/:id" element={<Payment />} />
